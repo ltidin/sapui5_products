@@ -1,0 +1,85 @@
+<mvc:View
+    controllerName="products.sapui5products.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+                    <l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<Input id="productInput"
+			placeholder="{i18n>enterProduct}"
+            textFormatMode="Value"
+            editable="{= ${prodView>/isEditMode}!==true }"
+            showSuggestion="true" showValueHelp="true" valueHelpRequest="onValueHelpRequest"
+		suggestionItems="{ path: '/Products' }">
+<suggestionItems>
+				<core:Item text="{Name}" />
+			</suggestionItems>
+        </Input>
+        </l:VerticalLayout>
+		<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="SimpleFormToolbar"
+			editable="false"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false"
+            visible="{= ${prodView>/isProdLoaded}}">
+			<f:content>
+				<Toolbar ariaLabelledBy="TitleProdDetails">
+					<Title id="ProdDetails" text="{i18n>prodDetails}"/>
+					<ToolbarSpacer />
+					<Button icon="sap-icon://edit" press="onEdit" visible="{= ${prodView>/isEditMode}!==true }"/>
+				</Toolbar>
+                <Label text="{i18n>ID}" />
+				<Input value="{prodView>/selectedProduct/ID}" editable="false"/>
+				<Label text="{i18n>name}" />
+				<Input value="{prodView>/selectedProduct/Name}" editable="{= ${prodView>/isEditMode}===true}"/>
+				<Label text="{i18n>description}" />
+				<Input value="{prodView>/selectedProduct/Description}" editable="{= ${prodView>/isEditMode}===true}"/>
+                <Label text="{i18n>releaseDate}"/>
+				<Input value="{prodView>/selectedProduct/ReleaseDate}" editable="false"/>
+				<Label text="{i18n>discontinuedDate}" />
+                <DatePicker
+			        id="DP1"
+			        value="{prodView>/selectedProduct/DiscontinuedDate}" valueFormat="yyyy-MM-dd" displayFormat="long"
+			        class="sapUiSmallMarginBottom" editable="{= ${prodView>/isEditMode}===true}"/>
+                <Label text="{i18n>price}"/>
+				<Input value="{prodView>/selectedProduct/Price}" editable="{= ${prodView>/isEditMode}===true}"/>
+                <Label text="{i18n>rating}"/>
+                <RatingIndicator id="RI_default" maxValue="5" class="sapUiSmallMarginBottom" value="{prodView>/selectedProduct/Rating}" tooltip="{i18n>rating}" editable="{= ${prodView>/isEditMode}===true}"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+                    </content>
+                    		<footer>
+			<OverflowToolbar visible="{= ${prodView>/isEditMode}===true}">
+				<content>
+					<ToolbarSpacer />
+					<Button text="{i18n>save}" press="onSave" type="Emphasized"/>
+					<Button text="{i18n>cancel}" press="onCancel"/>
+				</content>
+			</OverflowToolbar>
+		</footer>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
